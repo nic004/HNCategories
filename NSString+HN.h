@@ -33,6 +33,7 @@
 - (NSString *)escapeHTMLEntities;
 - (NSDictionary *)parseQueryString;
 - (id)JSONObjectWithOptions:(NSJSONReadingOptions)opt error:(NSError **)error;
+- (BOOL)hasWhitespaceEnding;
 
 BOOL NSStringIsEmpty(NSString *string);
 BOOL NSStringIsNotEmpty(NSString *string);

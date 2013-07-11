@@ -88,6 +88,14 @@
   return [NSDictionary dictionaryWithDictionary:qs];
 }
 
+- (BOOL)hasWhitespaceEnding
+{
+  if (self.length < 1) return NO;
+  NSString *lastString = [self substringWithRange:NSMakeRange(self.length-1, 1)];
+  NSRange whiteSpaceRange = [lastString rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+  return whiteSpaceRange.location != NSNotFound;
+}
+
 BOOL NSStringIsEmpty(NSString *string) {
   return [[string stringByTrimmingWhiteSpaces] length] == 0;
 }
@@ -95,4 +103,5 @@ BOOL NSStringIsEmpty(NSString *string) {
 BOOL NSStringIsNotEmpty(NSString *string) {
   return !NSStringIsEmpty(string);
 }
+
 @end
