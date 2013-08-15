@@ -104,4 +104,40 @@ BOOL NSStringIsNotEmpty(NSString *string) {
   return !NSStringIsEmpty(string);
 }
 
+- (NSRange)kc_adjustRange:(NSRange)aRange
+{
+    NSUInteger index, endIndex;
+    NSRange newRange, endRange;
+    
+    // Check for validity of range
+    if ( aRange.location >= [self length] ||
+        aRange.location + aRange.length > [self length] )
+    {
+        [NSException raise:NSRangeException format:@"Invalid  range %@.",
+         NSStringFromRange(aRange)];
+    }
+    
+    index = aRange.location;
+    newRange = [self rangeOfComposedCharacterSequenceAtIndex:index];
+    
+    index = aRange.location + aRange.length - 1;
+    endRange = [self rangeOfComposedCharacterSequenceAtIndex:index];
+    if (endRange.location + endRange.length > aRange.location + aRange.length) {
+        endRange.length = 0;
+    }
+    
+    endIndex = endRange.location + endRange.length;
+    newRange.length = endIndex - newRange.location;
+    
+    return newRange;
+}
+
+- (NSString *)kc_substringWithAdjustedRange:(NSRange)aRange
+{
+    if (aRange.length == 0) return @"";
+    
+    NSRange adjustedRange = [self kc_adjustRange:aRange];
+    return [self substringWithRange:adjustedRange];
+}
+
 @end

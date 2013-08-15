@@ -38,4 +38,7 @@
 BOOL NSStringIsEmpty(NSString *string);
 BOOL NSStringIsNotEmpty(NSString *string);
 
+- (NSRange)kc_adjustRange:(NSRange)aRange;
+- (NSString *)kc_substringWithAdjustedRange:(NSRange)aRange;
+
 @end
